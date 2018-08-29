@@ -1,15 +1,11 @@
 import * as localforage from 'localforage';
 
-// import STORAGE from '@core/constants/storage.constant';
-
-// import { CoreThemeModel, CoreLanguageModel } from '@core/models';
-// import { Service, provideSingleton } from '@core/decorators';
+import { provideSingleton } from '../decorators/di.decorators';
 import { BaseService } from './base.service';
 
-// import TYPES from '@core/constants/types.constant';
-// import { di } from '@core/services/di.service';
+import TYPES from '../constants/types.constant';
 
-// @provideSingleton(TYPES.StorageService)
+@provideSingleton(TYPES.StorageService)
 export class StorageService extends BaseService {
   private db: LocalForage;
 
@@ -37,5 +33,3 @@ export class StorageService extends BaseService {
     return this.db.removeItem(key);
   }
 }
-
-// di.load();

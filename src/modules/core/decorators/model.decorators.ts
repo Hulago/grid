@@ -32,7 +32,7 @@ export interface IPropertiesMetadata {
 }
 
 export interface IValidation {
-  fn: Function;
+  fn: (...args: any[]) => any;
   options?: IValidationOptions | null;
   key: string;
   field?: string | null;

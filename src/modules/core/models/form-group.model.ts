@@ -51,6 +51,7 @@ export class FormGroup extends AbstractControl {
   addControl(name: string, c: AbstractControl) {
     if (this.$controls) {
       this.$controls[name] = c;
+      (this as any)[name] = c;
     }
     c.$name = name;
     c.$parent = this;

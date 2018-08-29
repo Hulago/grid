@@ -1,0 +1,27 @@
+import { ICore } from './core.mixin';
+import {
+  NotificationService,
+  StorageService,
+  UtilsService,
+  ValidationService,
+  AuthService,
+  FormsService
+} from '@core/services';
+
+import { AbstractControl, CoreThemeModel } from '@core/models';
+
+declare module 'vue/types/vue' {
+  // 3. Declare augmentation for Vue
+  interface Vue {
+    $core: ICore;
+    notificationService?: NotificationService;
+    storageService?: StorageService;
+    utilsService?: UtilsService;
+    validationService?: ValidationService;
+    formsService?: FormsService;
+    i18n?(token: string, required?: boolean, fn?: any);
+    i18nCurrency(value: number | string, style?: string): string;
+    coreSetTheme?(theme: CoreThemeModel): void;
+    getError?(fc: AbstractControl, order?: string[]): string | string[];
+  }
+}

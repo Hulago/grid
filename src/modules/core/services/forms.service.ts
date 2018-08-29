@@ -1,16 +1,17 @@
 import 'reflect-metadata';
 import { IPropertiesOptions, IValidation } from '../decorators/model.decorators';
 import METADATA from '../constants/metadata.constant';
-// import { klass, BaseService, PROPS_TYPE } from '@core/services';
 import { BaseService } from './base.service';
-import { AbstractControl, IAbstractControlValidator } from '../models/abstract-control.model';
+import { AbstractControl } from '../models/abstract-control.model';
 import { FormControl } from '../models/form-control.model';
 import { FormGroup } from '../models/form-group.model';
-// import TYPES from '@core/constants/types.constant';
-// import { di } from '@core/services/di.service';
+import TYPES from '../constants/types.constant';
+import { provideSingleton } from '../decorators/di.decorators';
+
 import { isArray, isObject, isNumber, isString, isBoolean, isEmpty } from 'lodash';
 
-export type klass<T> = { new (...args: any[]): T } | Function;
+type AnyFunction = (...args: any[]) => any;
+export type klass<T> = { new (...args: any[]): T } | AnyFunction;
 
 export interface IFormsService {
   generateFormGroup(ModelClass: klass<any>): any;
@@ -25,7 +26,7 @@ export const PROPS_TYPE = {
   ANY: 'any'
 };
 
-// @provideSingleton(TYPES.FormsService)
+@provideSingleton(TYPES.FormsService)
 export class FormsService extends BaseService implements IFormsService {
   static order = ['required', 'min'];
 

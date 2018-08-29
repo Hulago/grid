@@ -1,18 +1,46 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+  <v-layout row wrap>
+    <v-flex xs3>
+      <v-img
+        :src="logo"
+        :lazy-src="logo"
+        aspect-ratio="1"
+        max-height="256"
+        max-width="256"
+      >
+    <v-layout
+        slot="placeholder"
+        fill-height
+        align-center
+        justify-center
+        ma-0
+      >
+        <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+      </v-layout>
+    </v-img>
+              
+      
+    </v-flex>
+    <v-flex x9 class="pa-5">
+        <h1>Welcome to the Grid</h1>      
+    </v-flex>
+  </v-layout>
+    
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
 
-@Component({
-  components: {
-    HelloWorld,
-  },
-})
-export default class Home extends Vue {}
+@Component({})
+export default class Home extends Vue {
+
+logo: string;
+
+constructor() {
+  super();
+  this.logo = require('../assets/grid.png');
+}
+
+}
 </script>
