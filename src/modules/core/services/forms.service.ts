@@ -10,8 +10,7 @@ import { provideSingleton } from '../decorators/di.decorators';
 
 import { isArray, isObject, isNumber, isString, isBoolean, isEmpty } from 'lodash';
 
-type AnyFunction = (...args: any[]) => any;
-export type klass<T> = { new (...args: any[]): T } | AnyFunction;
+import { klass } from '../types';
 
 export interface IFormsService {
   generateFormGroup(ModelClass: klass<any>): any;

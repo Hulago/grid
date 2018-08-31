@@ -3,9 +3,7 @@ import Vue from 'vue';
 import { namespace } from 'vuex-class';
 
 import { Component } from 'vue-property-decorator';
-import { FormsService } from '../services/forms.service';
-import { NotificationService } from '../services/notification.service';
-import { StorageService } from '../services/storage.service';
+import { FormsService, NotificationService, StorageService, DBService } from '../services';
 import { Inject } from '../decorators/di.decorators';
 
 import { AbstractControl } from '../models/abstract-control.model';
@@ -24,6 +22,7 @@ declare module 'vue/types/vue' {
     notificationService: NotificationService;
     storageService: StorageService;
     formsService: FormsService;
+    dbService: DBService;
 
     $coreLayoutSetLeftDrawer: (state: boolean) => void;
     $coreLayoutSetLeftDrawerClipped: (state: boolean) => void;
@@ -32,6 +31,17 @@ declare module 'vue/types/vue' {
     $coreLayoutSetSidebarTitle: (title: string) => void;
     $coreLayoutSetToolbarTitle: (title: string) => void;
     $coreLayoutSetIcon: (icon: string) => void;
+
+    $layout: {
+      windowWidth: number | null;
+      windowHeight: number | null;
+      mobile: boolean;
+      xs: boolean;
+      sm: boolean;
+      md: boolean;
+      lg: boolean;
+      xl: boolean;
+    };
 
     i18n?(token: string, required?: boolean, fn?: any): string;
     i18nCurrency(value: number | string, style?: string): string;
@@ -43,6 +53,8 @@ const core = namespace('core');
 
 @Component({})
 export class CoreMixin extends Vue {
+  flag: boolean = false;
+
   @Inject(TYPES.NotificationService)
   public notificationService!: NotificationService;
 
@@ -51,6 +63,9 @@ export class CoreMixin extends Vue {
 
   @Inject(TYPES.FormsService)
   public formsService!: FormsService;
+
+  @Inject(TYPES.DBService)
+  public dbService!: DBService;
 
   @core.Mutation(CORE_MUTATIONS.LAYOUT.SET_LEFT_DRAWER)
   public $coreLayoutSetLeftDrawer!: (state: boolean) => void;

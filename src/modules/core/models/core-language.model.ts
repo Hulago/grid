@@ -1,5 +1,6 @@
 import { required, maxLength } from '../decorators/model.decorators';
-import { BaseModel, Partial } from './base.model';
+import { BaseModel } from './base.model';
+import { Partial } from '../types';
 
 export class CoreLanguageModel extends BaseModel {
   @required()

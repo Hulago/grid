@@ -1,8 +1,9 @@
-import { BaseModel, Partial } from '@/modules/core/models/base.model';
+import { BaseModel } from '@/modules/core/models/base.model';
+import { Partial } from '@/modules/core/types';
 import { required, email } from '@/modules/core/decorators/model.decorators';
-import { Course } from './course.model';
+import { CourseModel } from './course.model';
 
-export class Teacher extends BaseModel {
+export class TeacherModel extends BaseModel {
   @required()
   @email()
   email: string | null = null;
@@ -11,9 +12,12 @@ export class Teacher extends BaseModel {
   name: string | null = null;
 
   @required()
-  courses: Course[] = [];
+  passwordHash: string | null = null;
 
-  constructor(data?: Partial<Teacher>) {
+  @required()
+  courses: CourseModel[] = [];
+
+  constructor(data?: Partial<TeacherModel>) {
     super(data);
   }
 }

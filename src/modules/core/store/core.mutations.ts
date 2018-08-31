@@ -1,10 +1,20 @@
 import { cloneDeep } from 'lodash';
 
 import MUTATIONS from '../constants/mutations.constant';
-import { CoreStateModel } from '../models/core-state.model';
+import { CoreStateModel, CoreUserModel } from '../models';
 import { CoreLanguageModel } from '../models/core-language.model';
 
 export default {
+  [MUTATIONS.AUTH.SET_AUTHENTICATED](state: CoreStateModel, authenticated: boolean) {
+    state.auth.authenticated = authenticated;
+  },
+
+  [MUTATIONS.AUTH.SET_CURRENT_USER](state: CoreStateModel, user: CoreUserModel) {
+    state.auth.email = user.email;
+    state.auth.name = user.name;
+    state.auth.id = user.id;
+  },
+
   [MUTATIONS.SET_CURRENT_LANGUAGE](state: CoreStateModel, language: CoreLanguageModel) {
     state.currentLanguage = language;
   },

@@ -3,5 +3,7 @@ export default {
   FormsService: Symbol('FormsService'),
   HTTPService: Symbol('HTTPService'),
   NotificationService: Symbol('NotificationService'),
-  StorageService: Symbol('StorageService')
+  StorageService: Symbol('StorageService'),
+  AuthService: Symbol('AuthService'),
+  DBService: Symbol('DBService')
 };

@@ -25,7 +25,7 @@ export class StorageService extends BaseService {
     return this.db.setItem(key, value);
   }
 
-  getItem(key: string) {
+  getItem(key: string): Promise<any> {
     return this.db.getItem(key);
   }
 

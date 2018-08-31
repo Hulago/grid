@@ -1,9 +1,10 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Home from './views/Home.vue';
+import Dashboard from './views/Dashboard.vue';
 import Sidebar from './views/Sidebar.vue';
 import Login from './views/Login.vue';
 import Signup from './views/Signup.vue';
+import Home from './views/Home.vue';
 import AppLayout from './AppLayout.vue';
 import CenterLayout from './CenterLayout.vue';
 
@@ -14,16 +15,24 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
     {
+      path: '/',
+      name: 'home',
+      component: Home,
+      meta: { requiresAuth: false }
+    },
+    {
       path: '/app',
       component: AppLayout,
+      meta: { requiresAuth: true },
       children: [
         {
           path: '',
-          name: 'home',
+          name: 'dashboard',
           components: {
             sidebar: Sidebar,
-            default: Home
-          }
+            default: Dashboard
+          },
+          meta: { requiresAuth: false }
         },
         {
           path: 'about',
@@ -34,7 +43,8 @@ export default new Router({
           components: {
             sidebar: Sidebar,
             default: () => import(/* webpackChunkName: "about" */ './views/About.vue')
-          }
+          },
+          meta: { requiresAuth: false }
         }
       ]
     },

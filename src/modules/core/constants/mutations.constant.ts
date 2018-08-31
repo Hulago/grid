@@ -1,9 +1,8 @@
 export default {
   AUTH: {
     // new
-    SET_AUTHENTICATED: 'authSetAuthenticatedMutation',
-    SET_PARSED_TOKEN: 'authSetParsedTokenMutation',
-    SET_KEYCLOAK_PROFILE: 'authSetKeycloakProfileMutation'
+    SET_AUTHENTICATED: 'coreAuthSetAuthenticatedMutation',
+    SET_CURRENT_USER: 'coreAuthSetCurrentUser'
   },
   LAYOUT: {
     SET_LEFT_DRAWER: 'layoutSetLeftDrawerMutation',

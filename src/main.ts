@@ -1,4 +1,5 @@
 import 'vuetify/dist/vuetify.min.css';
+import 'mdi/css/materialdesignicons.min.css';
 
 import Vue from 'vue';
 import App from './App.vue';
@@ -21,12 +22,22 @@ Vue.use(Vuetify, {
 });
 
 Vue.use(vCore as any, {
-  store
+  store,
+  router
 });
 
 Vue.config.productionTip = false;
 
-Vue.directive('dsd');
+Vue.prototype.$layout = {
+  windowWidth: null,
+  windowHeight: null,
+  mobile: false,
+  xs: false,
+  sm: false,
+  md: false,
+  lg: false,
+  xl: false
+};
 
 new Vue({
   router,

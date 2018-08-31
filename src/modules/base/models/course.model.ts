@@ -1,11 +1,12 @@
-import { BaseModel, Partial } from '@/modules/core/models/base.model';
+import { BaseModel } from '@/modules/core/models/base.model';
+import { Partial } from '@/modules/core/types';
 import { email } from '@/modules/core/decorators/model.decorators';
 
-export class Course extends BaseModel {
+export class CourseModel extends BaseModel {
   @email()
   name: string | null = null;
 
-  constructor(data?: Partial<Course>) {
+  constructor(data?: Partial<CourseModel>) {
     super(data);
   }
 }

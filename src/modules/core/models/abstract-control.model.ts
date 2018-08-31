@@ -167,7 +167,7 @@ export class AbstractControl {
         this.removeError('required');
       }
 
-      if (!this.$required && this.isEmpty()) {
+      if (!this.$required && this.isEmpty() && this.$parent) {
         this.removeError('required');
         return Promise.resolve(true);
       }

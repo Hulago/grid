@@ -4,8 +4,7 @@ import { merge } from 'lodash';
 import METADATA from '../constants/metadata.constant';
 import validators from '../utils/validations.util';
 
-// tslint:disable-next-line:ban-types
-export type klass<T> = { new (...args: any[]): T } | Function;
+import { klass } from '../types';
 
 export interface IValidationOptions {
   i18nMessage?: string;
@@ -208,6 +207,10 @@ export function endpoint(endpointParam: string) {
   return (target: object) => defineEndpoint(target, endpointParam);
 }
 
+export function entity(entityName: string) {
+  return (target: object) => defineEntity(target, entityName);
+}
+
 export function lookup(lookupField: string, lookupClass: klass<any>, lookupLoop: boolean = false) {
   return (target: object, key: string | symbol) =>
     defineProperty(target, key, {
@@ -317,6 +320,11 @@ function defineProperty(ctor: object, key: string | symbol, options: IProperties
 
 function defineEndpoint(ctor: object, endpointParam: string) {
   Reflect.defineMetadata(METADATA.ENDPOINTS, endpointParam, ctor);
+}
+
+function defineEntity(ctor: object, entityName: string) {
+  const entities = Reflect.getMetadata(METADATA.ENTITIES, ctor) || {};
+  Reflect.defineMetadata(METADATA.ENTITIES, { ...entities, [entityName]: ctor }, ctor);
 }
 
 function definePropertyValidation(target: object, key: string | symbol, validation: IValidation) {

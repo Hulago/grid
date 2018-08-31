@@ -7,9 +7,12 @@
       </v-card-title>
       <v-card-text>
         <v-form>
-          <v-text-field prepend-icon="person" outline name="email" label="email" type="text" v-fc="form.email" v-model="form.email.value" :error-messages="getError(form.email)"></v-text-field>
-          <v-text-field id="password" prepend-icon="lock" outline name="password" label="Password" type="password" v-fc="form.password" v-model="form.password.value" :error-messages="getError(form.password)"></v-text-field>
+          <v-text-field prepend-icon="person" outline name="email" label="email" type="text" v-fc="form.email" v-model="form.email.value"
+            :error-messages="getError(form.email)"></v-text-field>
+          <v-text-field id="password" prepend-icon="lock" outline name="password" label="Password" type="password" v-fc="form.password"
+            v-model="form.password.value" :error-messages="getError(form.password)"></v-text-field>
         </v-form>
+        <router-link :to="{name: 'signup'}">Signup</router-link>
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
@@ -24,7 +27,8 @@
 import { Component, Vue } from 'vue-property-decorator';
 import { required, email } from '@/modules/core/decorators/model.decorators';
 import { FormGroup } from '@/modules/core/models/form-group.model';
-import { BaseModel, Partial } from '@/modules/core/models/base.model';
+import { BaseModel } from '@/modules/core/models/base.model';
+import { Partial } from '@/modules/core/types';
 
 export class LoginModel extends BaseModel {
   @required()

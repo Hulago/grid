@@ -2,7 +2,7 @@
 
   <v-list dense>
     <v-subheader>Menu</v-subheader>
-    <v-list-tile class="grey--text text--darken-1" :to="{name: 'home'}" active-class="active primary--text">
+    <v-list-tile class="grey--text text--darken-1" :to="{name: 'dashboard'}" active-class="active primary--text">
       <v-list-tile-content>
         Home
       </v-list-tile-content>

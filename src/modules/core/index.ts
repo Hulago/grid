@@ -1,9 +1,10 @@
 import Vue from 'vue';
+import Router from 'vue-router';
 import VueI18n from 'vue-i18n';
 
 import { merge } from 'lodash';
 
-// import * as Components from '@core/components';
+import * as Components from './components';
 import * as Directives from './directives';
 import * as Filters from './filters';
 import * as Services from './services';
@@ -17,7 +18,7 @@ import { CoreMixin } from './mixins/core.mixin';
 import core from './store';
 
 const vCore = {
-  install(V: typeof Vue, { store }: { store: any }) {
+  install(V: typeof Vue, { store, router }: { store: any; router: Router }) {
     if (!store) {
       throw new Error('Please provide vuex store.');
     }
@@ -41,7 +42,12 @@ const vCore = {
     V.filter('toDateTime', Filters.toDateTime);
     V.filter('bytes', Filters.bytes);
 
+    V.component('core-sidebar', Components.CoreSidebarComponent);
+
     const storageService: Services.StorageService = Services.di.get<Services.StorageService>(TYPES.StorageService);
+    const authService: Services.AuthService = Services.di.get<Services.AuthService>(TYPES.AuthService);
+
+    authService.setup(store);
 
     // TODO set this on the app config
     storageService.setup('CORE');
@@ -49,7 +55,7 @@ const vCore = {
     // View App Layouts
     V.mixin(CoreMixin);
 
-    // router.beforeEach(authService.validate(config.auth.authAction));
+    router.beforeEach(authService.validate());
 
     // router.addRoutes([
     //   {

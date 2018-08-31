@@ -3,7 +3,7 @@ import { merge, cloneDeep } from 'lodash';
 
 import METADATA from '../constants/metadata.constant';
 
-export type Partial<T> = { [P in keyof T]?: T[P] };
+import { Partial } from '../types';
 
 export class BaseModel {
   serialize?: () => any;
