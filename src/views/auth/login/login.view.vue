@@ -1,6 +1,6 @@
 <template>
 
-  <v-flex xs12 sm8 md4 lg3>
+  <v-flex xs12 sm8 md4 lg3 @keyup.enter="form.$valid && login()">
     <v-card color="secondary" class="elevation-12">
       <v-card-title>
         <span class="title primary--text primary--lighten-1 ">Login</span>
@@ -16,7 +16,7 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="primary">Login</v-btn>
+        <v-btn color="primary" @click="login()" :disabled="loading || !form.$valid">Login</v-btn>
       </v-card-actions>
     </v-card>
   </v-flex>
@@ -25,10 +25,17 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+
+import { namespace } from 'vuex-class';
+
 import { required, email } from '@/modules/core/decorators/model.decorators';
 import { FormGroup } from '@/modules/core/models/form-group.model';
 import { BaseModel } from '@/modules/core/models/base.model';
 import { Partial } from '@/modules/core/types';
+import CORE_ACTIONS from '@/modules/core/constants/actions.constant';
+import { CoreUserModel } from '@/modules/core/models';
+
+const core = namespace('core');
 
 export class LoginModel extends BaseModel {
   @required()
@@ -46,13 +53,41 @@ export class LoginModel extends BaseModel {
 export default class Login extends Vue {
   form: FormGroup | null;
 
+  @core.Action(CORE_ACTIONS.LOGIN) public coreActionLogin!: (obj: any) => any;
+
+  loading: boolean;
+
   constructor() {
     super();
     this.form = null;
+    this.loading = false;
   }
 
   created() {
     this.form = this.formsService.generateFormGroup(new LoginModel());
+  }
+
+  async login() {
+    this.loading = true;
+
+    if (this.form) {
+      const valid = await this.form.validateForm();
+      if (valid) {
+        try {
+          this.$coreSetLoading(true);
+          const user: CoreUserModel = await this.coreActionLogin(this.form.value);
+
+          this.notificationService.success('LOGIN', `Welcome ${user.name}`);
+          this.$router.push({ name: 'dashboard' });
+        } catch (e) {
+          this.notificationService.warning('LOGIN', e.message);
+        }
+      } else {
+        this.notificationService.warning('FORM VALIDATION', 'Invalid Fields');
+      }
+    }
+
+    this.loading = false;
   }
 }
 </script>

@@ -5,6 +5,14 @@ import { CoreStateModel, CoreUserModel } from '../models';
 import { CoreLanguageModel } from '../models/core-language.model';
 
 export default {
+  [MUTATIONS.SET_LOADING](state: CoreStateModel, loading: boolean) {
+    state.loading = loading;
+  },
+
+  [MUTATIONS.AUTH.SET_AUTHENTICATED](state: CoreStateModel, authenticated: boolean) {
+    state.auth.authenticated = authenticated;
+  },
+
   [MUTATIONS.AUTH.SET_AUTHENTICATED](state: CoreStateModel, authenticated: boolean) {
     state.auth.authenticated = authenticated;
   },

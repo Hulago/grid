@@ -1,9 +1,9 @@
 <template>
-  <v-app>
-    <v-navigation-drawer :clipped="$vuetify.breakpoint.lgAndUp" v-model="drawer" fixed app class="pa-0" width="330" mini-variant-width="70"
-      :mini-variant="drawerMini">
+  <div>
+    <v-navigation-drawer :clipped="$vuetify.breakpoint.lgAndUp" v-model="drawer" fixed app class="pa-0" width="330" mini-variant-width="80"
+      :mini-variant="drawerMini" :floating="leftDrawerFloating">
       <v-layout row fill-height>
-        <core-sidebar color="#003255" :items="sidebarItems" :mobile="false" @selected="selectedItem($event)" @clickLogo="clickLogo()">
+        <core-sidebar color="#003255" :items="sidebarItems" :mobile="$layout.mobile" @selected="selectedItem($event)" @clickLogo="clickLogo()">
           <slot name="sidebarLogo" slot="logo"></slot>
         </core-sidebar>
         <div class="app-sidebar" style="width: 300px;">
@@ -17,7 +17,7 @@
       </v-layout>
     </v-navigation-drawer>
 
-    <v-toolbar :clipped-left="$vuetify.breakpoint.lgAndUp" color="primary darken-3" dark app fixed>
+    <v-toolbar :clipped-left="$vuetify.breakpoint.lgAndUp" color="primary darken-3" dark app fixed :mini="leftDrawerMini" :mobile="$layout.mobile">
       <v-toolbar-title class="mr-5">
         <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
         <span class="hidden-sm-and-down">Grid</span>
@@ -36,54 +36,59 @@
         <router-view></router-view>
       </v-container>
     </v-content>
-  </v-app>
+  </div>
 
 </template>
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import { namespace } from 'vuex-class';
 import { Location } from 'vue-router';
-import { CoreSidebarItemsModel } from '@/modules/core/models';
+import { CoreSidebarItemsModel, CoreStateModel } from '@/modules/core/models';
+
+const core = namespace('core');
 
 @Component({})
 export default class AppLayout extends Vue {
-  drawer: boolean;
-  drawerMini: boolean;
+  @core.State((state: CoreStateModel) => state.appLayout.leftDrawer)
+  public leftDrawer!: boolean;
 
-  // public leftDrawer: boolean;
-  // public leftDrawerClipped: boolean;
-  // public leftDrawerMini: boolean;
-  // public leftDrawerFloating: boolean;
+  @core.State((state: CoreStateModel) => state.appLayout.leftDrawerClipped)
+  public leftDrawerClipped!: boolean;
+
+  @core.State((state: CoreStateModel) => state.appLayout.leftDrawerMini)
+  public leftDrawerMini!: boolean;
+
+  @core.State((state: CoreStateModel) => state.appLayout.leftDrawerFloating)
+  public leftDrawerFloating!: boolean;
 
   public sidebarItems: CoreSidebarItemsModel[];
 
   constructor() {
     super();
-    this.drawer = true;
-    this.drawerMini = false;
 
     this.sidebarItems = [
       {
         icon: 'mdi-widgets',
         i18n: 'MENU.COMPONENTS',
-        route: '/app',
+        route: '/app/1',
         roles: ['IM_USER']
       },
       {
         icon: 'mdi-brush',
         i18n: 'MENU.THEMES',
-        route: '/app/themes',
+        route: '/app',
         roles: ['IM_USER']
       },
       {
         icon: 'mdi-floor-plan',
         i18n: 'MENU.LAYOUTS',
-        route: '/app/layouts',
+        route: '/app/2',
         roles: ['IM_USER']
       },
       {
         icon: 'mdi-pencil',
         i18n: 'MENU.CRUD',
-        route: '/app/crud',
+        route: '/app/3',
         roles: ['IM_USER']
       },
       {
@@ -105,6 +110,22 @@ export default class AppLayout extends Vue {
         roles: ['IM_USER']
       }
     ];
+  }
+
+  get drawer() {
+    return this.leftDrawer;
+  }
+
+  set drawer(value) {
+    this.$layoutSetLeftDrawer(value);
+  }
+
+  get drawerMini() {
+    return this.leftDrawerMini;
+  }
+
+  set drawerMini(value) {
+    this.$layoutSetLeftDrawerMini(value);
   }
 
   // async created() {

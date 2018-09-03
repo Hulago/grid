@@ -16,6 +16,9 @@ export class CoreStateModel extends BaseModel {
   @prop()
   auth!: CoreAuthModel;
 
+  @defaultValue(false)
+  loading!: boolean;
+
   constructor(data?: Partial<CoreStateModel>) {
     super(data);
   }

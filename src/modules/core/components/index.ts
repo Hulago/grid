@@ -1,3 +1,3 @@
 import CoreSidebarComponent from './core-sidebar/core-sidebar.component.vue';
-
-export { CoreSidebarComponent };
+import CoreGlobalLoading from './core-global-loading/core-global-loading.component.vue';
+export { CoreSidebarComponent, CoreGlobalLoading };

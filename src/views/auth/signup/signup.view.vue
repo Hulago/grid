@@ -39,6 +39,7 @@ import STORAGE from '@/constants/storage.constant';
 import CORE_ACTIONS from '@/modules/core/constants/actions.constant';
 import { TeacherModel } from '@/modules/base/models/teacher.model';
 import { CoreStateModel } from '@/modules/core/models/core-state.model';
+import { CoreUserModel } from '@/modules/core/models';
 
 const core = namespace('core');
 
@@ -83,9 +84,9 @@ export default class Signup extends Vue {
       const valid = await this.form.validateForm();
       if (valid) {
         try {
-          await this.coreActionSignup(this.form.value);
+          const user: CoreUserModel = await this.coreActionSignup(this.form.value);
 
-          this.notificationService.success('SIGNUP', `Welcome ${(this.form as any).$controls['name'].value}`);
+          this.notificationService.success('SIGNUP', `Welcome ${user.name}`);
           this.$router.push({ name: 'dashboard' });
         } catch (e) {
           this.notificationService.warning('SIGNUP', e.message);
@@ -94,6 +95,7 @@ export default class Signup extends Vue {
         this.notificationService.warning('FORM VALIDATION', 'Invalid Fields');
       }
     }
+    this.loading = false;
   }
 }
 </script>

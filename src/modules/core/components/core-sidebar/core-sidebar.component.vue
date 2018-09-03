@@ -65,11 +65,13 @@ export default class CoreSidebarComponent extends Vue {
     ) {
       return {
         backgroundColor: `${this.hexToRgbA(this.$vuetify.theme.primary, '0.2')}`,
-        borderBottom: `3px solid ${this.$vuetify.theme.primary}`
+        borderLeft: `3px solid ${this.$vuetify.theme.primary}`,
+        borderRight: `3px solid transparent`
       };
     }
     return {
-      borderBottom: `3px solid transparent`
+      borderLeft: `3px solid transparent`,
+      borderRight: `3px solid transparent`
     };
   }
 

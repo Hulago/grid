@@ -13,6 +13,7 @@ export default {
     SET_SIDEBAR_TITLE: 'layoutSetSidebarTitleMutation',
     SET_TOOLBAR_TITLE: 'layoutSetToolbarTitleMutation'
   },
+  SET_LOADING: 'coreSetLoadingMutation',
   SET_CONFIG: 'setConfigMutation',
   SET_CURRENT_THEME: 'setCurrentThemeMutation',
   SET_NAVIGATION_COLOR: 'setNavigationColorMutation',

@@ -24,13 +24,14 @@ declare module 'vue/types/vue' {
     formsService: FormsService;
     dbService: DBService;
 
-    $coreLayoutSetLeftDrawer: (state: boolean) => void;
-    $coreLayoutSetLeftDrawerClipped: (state: boolean) => void;
-    $coreLayoutSetLeftDrawerFloating: (state: boolean) => void;
-    $coreLayoutSetLeftDrawerMini: (state: boolean) => void;
-    $coreLayoutSetSidebarTitle: (title: string) => void;
-    $coreLayoutSetToolbarTitle: (title: string) => void;
-    $coreLayoutSetIcon: (icon: string) => void;
+    $layoutSetLeftDrawer: (state: boolean) => void;
+    $layoutSetLeftDrawerClipped: (state: boolean) => void;
+    $layoutSetLeftDrawerFloating: (state: boolean) => void;
+    $layoutSetLeftDrawerMini: (state: boolean) => void;
+    $layoutSetSidebarTitle: (title: string) => void;
+    $layoutSetToolbarTitle: (title: string) => void;
+    $layoutSetIcon: (icon: string) => void;
+    $coreSetLoading: (loading: boolean) => void;
 
     $layout: {
       windowWidth: number | null;
@@ -68,25 +69,28 @@ export class CoreMixin extends Vue {
   public dbService!: DBService;
 
   @core.Mutation(CORE_MUTATIONS.LAYOUT.SET_LEFT_DRAWER)
-  public $coreLayoutSetLeftDrawer!: (state: boolean) => void;
+  public $layoutSetLeftDrawer!: (state: boolean) => void;
 
   @core.Mutation(CORE_MUTATIONS.LAYOUT.SET_LEFT_DRAWER_CLIPPED)
-  public $coreLayoutSetLeftDrawerClipped!: (state: boolean) => void;
+  public $layoutSetLeftDrawerClipped!: (state: boolean) => void;
 
   @core.Mutation(CORE_MUTATIONS.LAYOUT.SET_LEFT_DRAWER_FLOATING)
-  public $coreLayoutSetLeftDrawerFloating!: (state: boolean) => void;
+  public $layoutSetLeftDrawerFloating!: (state: boolean) => void;
 
   @core.Mutation(CORE_MUTATIONS.LAYOUT.SET_LEFT_DRAWER_MINI)
-  public $coreLayoutSetLeftDrawerMini!: (state: boolean) => void;
+  public $layoutSetLeftDrawerMini!: (state: boolean) => void;
 
   @core.Mutation(CORE_MUTATIONS.LAYOUT.SET_SIDEBAR_TITLE)
-  public $coreLayoutSetSidebarTitle!: (title: string) => void;
+  public $layoutSetSidebarTitle!: (title: string) => void;
 
   @core.Mutation(CORE_MUTATIONS.LAYOUT.SET_TOOLBAR_TITLE)
-  public $coreLayoutSetToolbarTitle!: (title: string) => void;
+  public $layoutSetToolbarTitle!: (title: string) => void;
 
   @core.Mutation(CORE_MUTATIONS.LAYOUT.SET_ICON)
-  public $coreLayoutSetIcon!: (icon: string) => void;
+  public $layoutSetIcon!: (icon: string) => void;
+
+  @core.Mutation(CORE_MUTATIONS.SET_LOADING)
+  public $coreSetLoading!: (loading: boolean) => void;
 
   getError(fc: FormControl, order = ['required']) {
     for (const key of order) {

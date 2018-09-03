@@ -17,16 +17,18 @@ export default {
     context: ActionContext<CoreStateModel, any>,
     { email, password }: { email: string; password: string }
   ) {
-    const user: any = dbService.get<CoreUserModel>('USER').find('email', email);
+    const user: CoreUserModel = dbService.get<CoreUserModel>('USER').findOne('email', email);
 
     if (user) {
       const sha256Password: string = await authService.sha256(password);
-      if (sha256Password === user.password) {
+      if (sha256Password === user.passwordHash) {
         context.commit(MUTATIONS.AUTH.SET_AUTHENTICATED, true);
         context.commit(MUTATIONS.AUTH.SET_CURRENT_USER, user);
+
+        return user;
       } else {
         context.commit(MUTATIONS.AUTH.SET_AUTHENTICATED, false);
-        throw new CoreErrorModel('CORE_ACTIONS', 'LOGIN', 'invalid password', null);
+        throw new CoreErrorModel('CORE_ACTIONS', 'LOGIN', 'invalid email or password', null);
       }
     } else {
       throw new CoreErrorModel('CORE_ACTIONS', 'LOGIN', 'invalid email address', null);
@@ -59,6 +61,8 @@ export default {
 
       context.commit(MUTATIONS.AUTH.SET_AUTHENTICATED, true);
       context.commit(MUTATIONS.AUTH.SET_CURRENT_USER, coreUser);
+
+      return coreUser;
     } else {
       throw new CoreErrorModel('CORE_ACTIONS', 'SIGNUP', 'email taken', null);
 

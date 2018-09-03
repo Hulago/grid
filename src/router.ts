@@ -1,9 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Dashboard from './views/Dashboard.vue';
+import Dashboard from './views/app/dashboard/dashboard.view.vue';
 import Sidebar from './views/Sidebar.vue';
-import Login from './views/Login.vue';
-import Signup from './views/Signup.vue';
 import Home from './views/Home.vue';
 import AppLayout from './AppLayout.vue';
 import CenterLayout from './CenterLayout.vue';
@@ -30,9 +28,9 @@ export default new Router({
           name: 'dashboard',
           components: {
             sidebar: Sidebar,
-            default: Dashboard
+            default: () => import(/* webpackChunkName: "dashboard" */ './views/app/dashboard/dashboard.view.vue')
           },
-          meta: { requiresAuth: false }
+          meta: { requiresAuth: true }
         },
         {
           path: 'about',
@@ -44,7 +42,7 @@ export default new Router({
             sidebar: Sidebar,
             default: () => import(/* webpackChunkName: "about" */ './views/About.vue')
           },
-          meta: { requiresAuth: false }
+          meta: { requiresAuth: true }
         }
       ]
     },
@@ -55,12 +53,14 @@ export default new Router({
         {
           path: 'login',
           name: 'login',
-          component: () => import(/* webpackChunkName: "login" */ './views/Login.vue')
+          component: () => import(/* webpackChunkName: "login" */ './views/auth/login/login.view.vue'),
+          meta: { requiresAuth: false }
         },
         {
           path: 'signup',
           name: 'signup',
-          component: () => import(/* webpackChunkName: "signup" */ './views/Signup.vue')
+          component: () => import(/* webpackChunkName: "signup" */ './views/auth/signup/signup.view.vue'),
+          meta: { requiresAuth: false }
         }
       ]
     }

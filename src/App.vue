@@ -1,32 +1,32 @@
 <template>
   <div>
-    <div v-if="loading">
-      <v-progress-circular size="50" color="primary" indeterminate></v-progress-circular>
-    </div>
-    <div v-else>
+    <v-app>
+      <core-global-loading :loading="globalLoading"></core-global-loading>
       <router-view></router-view>
-    </div>
+    </v-app>
 
   </div>
 
 </template>
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { CoreUserModel } from '@/modules/core/models';
+import { CoreUserModel, CoreStateModel } from '@/modules/core/models';
+import { namespace } from 'vuex-class';
+import { setTimeout } from 'timers';
+
+const core = namespace('core');
 
 @Component({})
 export default class App extends Vue {
-  public loading: boolean;
-
-  constructor() {
-    super();
-    this.loading = true;
-  }
+  @core.State((state: CoreStateModel) => state.loading)
+  public globalLoading!: boolean;
 
   async created() {
-    this.loading = true;
+    this.$coreSetLoading(true);
     await this.dbService.load('USER', CoreUserModel);
-    this.loading = false;
+    setTimeout(() => {
+      this.$coreSetLoading(false);
+    }, 500);
   }
 
   mounted() {

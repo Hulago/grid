@@ -43,6 +43,7 @@ const vCore = {
     V.filter('bytes', Filters.bytes);
 
     V.component('core-sidebar', Components.CoreSidebarComponent);
+    V.component('core-global-loading', Components.CoreGlobalLoading);
 
     const storageService: Services.StorageService = Services.di.get<Services.StorageService>(TYPES.StorageService);
     const authService: Services.AuthService = Services.di.get<Services.AuthService>(TYPES.AuthService);
