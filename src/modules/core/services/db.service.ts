@@ -24,7 +24,7 @@ export class DBService extends BaseService {
     this.db = {};
   }
 
-  async load<T>(entity: string, entityClass: klass<T>) {
+  async load<T>(entity: string) {
     // register entities
     const registry: string[] = await this.storageService.getItem('REGISTRY');
 

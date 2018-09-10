@@ -18,9 +18,9 @@ export default {
   },
 
   [MUTATIONS.AUTH.SET_CURRENT_USER](state: CoreStateModel, user: CoreUserModel) {
-    state.auth.email = user.email;
-    state.auth.name = user.name;
-    state.auth.id = user.id;
+    state.auth.email = user ? user.email : null;
+    state.auth.name = user ? user.name : null;
+    state.auth.id = user ? user.id : null;
   },
 
   [MUTATIONS.SET_CURRENT_LANGUAGE](state: CoreStateModel, language: CoreLanguageModel) {
@@ -75,6 +75,13 @@ export default {
     state.appLayout = {
       ...state.appLayout,
       leftDrawerFloating
+    };
+  },
+
+  [MUTATIONS.LAYOUT.SET_LAYOUT](state: CoreStateModel, layout: any) {
+    state.appLayout = {
+      ...state.appLayout,
+      ...layout
     };
   }
 };

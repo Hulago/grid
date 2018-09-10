@@ -8,6 +8,7 @@ import { Inject } from '../decorators/di.decorators';
 
 import { AbstractControl } from '../models/abstract-control.model';
 import { FormControl } from '../models/form-control.model';
+import { CoreStateModel } from '../models/core-state.model';
 
 import CORE_MUTATIONS from '../constants/mutations.constant';
 // import CORE_GETTERS from '@core/constants/getters.constant';
@@ -24,6 +25,15 @@ declare module 'vue/types/vue' {
     formsService: FormsService;
     dbService: DBService;
 
+    $layoutMobile: boolean;
+    $layoutXs: boolean;
+    $layoutSm: boolean;
+    $layoutMd: boolean;
+    $layoutLg: boolean;
+    $layoutXl: boolean;
+    $layoutHeight: number;
+    $layoutWidth: number;
+
     $layoutSetLeftDrawer: (state: boolean) => void;
     $layoutSetLeftDrawerClipped: (state: boolean) => void;
     $layoutSetLeftDrawerFloating: (state: boolean) => void;
@@ -33,20 +43,9 @@ declare module 'vue/types/vue' {
     $layoutSetIcon: (icon: string) => void;
     $coreSetLoading: (loading: boolean) => void;
 
-    $layout: {
-      windowWidth: number | null;
-      windowHeight: number | null;
-      mobile: boolean;
-      xs: boolean;
-      sm: boolean;
-      md: boolean;
-      lg: boolean;
-      xl: boolean;
-    };
-
-    i18n?(token: string, required?: boolean, fn?: any): string;
+    i18n(token: string, required?: boolean, fn?: any): string;
     i18nCurrency(value: number | string, style?: string): string;
-    getError?(fc: AbstractControl, order?: string[]): string | string[];
+    getError(fc: AbstractControl, order?: string[]): string | string[];
   }
 }
 
@@ -91,6 +90,30 @@ export class CoreMixin extends Vue {
 
   @core.Mutation(CORE_MUTATIONS.SET_LOADING)
   public $coreSetLoading!: (loading: boolean) => void;
+
+  @core.State((state: CoreStateModel) => state.appLayout.mobile)
+  public $layoutMobile!: boolean;
+
+  @core.State((state: CoreStateModel) => state.appLayout.xs)
+  public $layoutXs!: boolean;
+
+  @core.State((state: CoreStateModel) => state.appLayout.sm)
+  public $layoutSm!: boolean;
+
+  @core.State((state: CoreStateModel) => state.appLayout.md)
+  public $layoutMd!: boolean;
+
+  @core.State((state: CoreStateModel) => state.appLayout.lg)
+  public $layoutLg!: boolean;
+
+  @core.State((state: CoreStateModel) => state.appLayout.xl)
+  public $layoutXl!: boolean;
+
+  @core.State((state: CoreStateModel) => state.appLayout.windowHeight)
+  public $layoutHeight!: number;
+
+  @core.State((state: CoreStateModel) => state.appLayout.windowWidth)
+  public $layoutWidth!: number;
 
   getError(fc: FormControl, order = ['required']) {
     for (const key of order) {

@@ -11,7 +11,8 @@ export default {
     SET_LEFT_DRAWER_FLOATING: 'layoutSetLeftDrawerFloatingMutation',
     SET_ICON: 'layoutSetIconMutation',
     SET_SIDEBAR_TITLE: 'layoutSetSidebarTitleMutation',
-    SET_TOOLBAR_TITLE: 'layoutSetToolbarTitleMutation'
+    SET_TOOLBAR_TITLE: 'layoutSetToolbarTitleMutation',
+    SET_LAYOUT: 'layoutSetLayoutMutation'
   },
   SET_LOADING: 'coreSetLoadingMutation',
   SET_CONFIG: 'setConfigMutation',

@@ -102,10 +102,4 @@ export default {
   //     return response;
   //   });
   // },
-
-  // async [ACTIONS.LOGOUT](context, message) {
-  //   await authService.logout();
-
-  //   context.commit(MUTATIONS.AUTH.SET_AUTHENTICATED, false);
-  // }
 };

@@ -8,7 +8,7 @@
     <router-link class="core-sidebar-item py-2" :to="item.route" tag="div" @click.native="selectedItem(item)" v-for="item in items"
       :key="item.i18n" :style="activeStyle(item.route)">
       <v-icon color="white" class="mb-1">{{item.icon}}</v-icon>
-      <div class="core-sidebar-item__text" v-if="!$layout.mobile || active(item.route)" v-tc="item.i18n">
+      <div class="core-sidebar-item__text" v-if="!$layoutMobile || active(item.route)" v-tc="item.i18n">
         <!-- {{$t(item.i18n)}} -->
       </div>
     </router-link>

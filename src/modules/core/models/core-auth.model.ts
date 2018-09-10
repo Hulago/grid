@@ -7,13 +7,13 @@ export class CoreAuthModel extends BaseModel {
   authenticated!: boolean;
 
   @email()
-  email!: string;
+  email!: string | null;
 
   @prop()
-  name!: string;
+  name!: string | null;
 
   @prop()
-  id!: number | string;
+  id!: number | string | null;
 
   constructor(data?: Partial<CoreAuthModel>) {
     super(data);

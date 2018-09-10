@@ -1,7 +1,5 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Dashboard from './views/app/dashboard/dashboard.view.vue';
-import Sidebar from './views/Sidebar.vue';
 import Home from './views/Home.vue';
 import AppLayout from './AppLayout.vue';
 import CenterLayout from './CenterLayout.vue';
@@ -21,26 +19,84 @@ export default new Router({
     {
       path: '/app',
       component: AppLayout,
-      meta: { requiresAuth: true },
+      meta: { requiresAuth: false },
       children: [
         {
           path: '',
-          name: 'dashboard',
-          components: {
-            sidebar: Sidebar,
-            default: () => import(/* webpackChunkName: "dashboard" */ './views/app/dashboard/dashboard.view.vue')
-          },
-          meta: { requiresAuth: true }
+          redirect: 'dashboard',
+          meta: { requiresAuth: false }
         },
         {
-          path: 'about',
-          name: 'about',
+          path: 'dashboard',
+          name: 'dashboard',
+          components: {
+            sidebar: () =>
+              import(/* webpackChunkName: "dashboard" */ './views/app/dashboard/dashboard-sidebar.view.vue'),
+            default: () => import(/* webpackChunkName: "dashboard" */ './views/app/dashboard/dashboard.view.vue')
+          },
+          meta: { requiresAuth: false }
+        },
+        {
+          path: 'academic-year',
+          name: 'academic-year',
           // route level code-splitting
           // this generates a separate chunk (about.[hash].js) for this route
           // which is lazy-loaded when the route is visited.
           components: {
-            sidebar: Sidebar,
-            default: () => import(/* webpackChunkName: "about" */ './views/About.vue')
+            sidebar: () =>
+              import(// tslint:disable-next-line:max-line-length
+              /* webpackChunkName: "academic-year" */ './views/app/academic-year/academic-year-sidebar.view.vue'),
+            default: () =>
+              import(/* webpackChunkName: "academic-year" */ './views/app/academic-year/academic-year.view.vue')
+          },
+          meta: { requiresAuth: true }
+        },
+        {
+          path: 'courses',
+          name: 'courses',
+          // route level code-splitting
+          // this generates a separate chunk (about.[hash].js) for this route
+          // which is lazy-loaded when the route is visited.
+          components: {
+            sidebar: () => import(/* webpackChunkName: "courses" */ './views/app/courses/courses-sidebar.view.vue'),
+            default: () => import(/* webpackChunkName: "courses" */ './views/app/courses/courses.view.vue')
+          },
+          meta: { requiresAuth: true }
+        },
+        {
+          path: 'exams',
+          name: 'exams',
+          // route level code-splitting
+          // this generates a separate chunk (about.[hash].js) for this route
+          // which is lazy-loaded when the route is visited.
+          components: {
+            sidebar: () => import(/* webpackChunkName: "exams" */ './views/app/exams/exams-sidebar.view.vue'),
+            default: () => import(/* webpackChunkName: "exams" */ './views/app/exams/exams.view.vue')
+          },
+          meta: { requiresAuth: true }
+        },
+        {
+          path: 'classes',
+          name: 'classes',
+          // route level code-splitting
+          // this generates a separate chunk (about.[hash].js) for this route
+          // which is lazy-loaded when the route is visited.
+          components: {
+            sidebar: () => import(/* webpackChunkName: "classes" */ './views/app/classes/classes-sidebar.view.vue'),
+            default: () => import(/* webpackChunkName: "classes" */ './views/app/classes/classes.view.vue')
+          },
+          meta: { requiresAuth: true }
+        },
+        {
+          path: 'corrections',
+          name: 'corrections',
+          // route level code-splitting
+          // this generates a separate chunk (about.[hash].js) for this route
+          // which is lazy-loaded when the route is visited.
+          components: {
+            sidebar: () =>
+              import(/* webpackChunkName: "corrections" */ './views/app/corrections/corrections-sidebar.view.vue'),
+            default: () => import(/* webpackChunkName: "corrections" */ './views/app/corrections/corrections.view.vue')
           },
           meta: { requiresAuth: true }
         }

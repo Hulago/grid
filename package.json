@@ -11,6 +11,7 @@
     "test": "yarn test:unit"
   },
   "dependencies": {
+    "browser-soap": "johniak/browser-soap",
     "inversify": "^4.11.1",
     "inversify-binding-decorators": "^3.2.0",
     "inversify-inject-decorators": "^3.1.0",

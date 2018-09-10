@@ -11,8 +11,10 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { CoreUserModel, CoreStateModel } from '@/modules/core/models';
+
+import CORE_MUTATIONS from '@/modules/core/constants/mutations.constant';
+
 import { namespace } from 'vuex-class';
-import { setTimeout } from 'timers';
 
 const core = namespace('core');
 
@@ -21,9 +23,11 @@ export default class App extends Vue {
   @core.State((state: CoreStateModel) => state.loading)
   public globalLoading!: boolean;
 
+  @core.Mutation(CORE_MUTATIONS.LAYOUT.SET_LAYOUT) public setLayout!: (layout: any) => void;
+
   async created() {
     this.$coreSetLoading(true);
-    await this.dbService.load('USER', CoreUserModel);
+    await this.dbService.load<CoreUserModel>('USER');
     setTimeout(() => {
       this.$coreSetLoading(false);
     }, 500);
@@ -60,16 +64,20 @@ export default class App extends Vue {
     };
 
     const w = document.documentElement.clientWidth;
-    this.$layout.windowWidth = w;
-
     const h = document.documentElement.clientHeight;
-    this.$layout.windowHeight = h;
-    this.$layout.mobile = w < 1400;
-    this.$layout.xs = w <= mediaQuery.xs.max;
-    this.$layout.sm = w >= mediaQuery.sm.min && w <= mediaQuery.sm.max;
-    this.$layout.md = w >= mediaQuery.md.min && w <= mediaQuery.md.max;
-    this.$layout.lg = w >= mediaQuery.lg.min && w <= mediaQuery.lg.max;
-    this.$layout.xl = w >= mediaQuery.xl.min;
+    const layout = {
+      windowWidth: w,
+      windowHeight: h,
+      mobile: w < 1400,
+      xs: w <= mediaQuery.xs.max,
+      sm: w >= mediaQuery.sm.min && w <= mediaQuery.sm.max,
+      md: w >= mediaQuery.md.min && w <= mediaQuery.md.max,
+      lg: w >= mediaQuery.lg.min && w <= mediaQuery.lg.max,
+      xl: w >= mediaQuery.xl.min
+    };
+    this.$nextTick(() => {
+      this.setLayout(layout);
+    });
   }
 
   beforeDestroy() {

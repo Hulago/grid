@@ -9,7 +9,10 @@
 
     </v-flex>
     <v-flex x9 class="pa-5">
-      <h1>Welcome to the Grid</h1>
+      <h1 v-tc="'DASHBOARD.DASHBOARD'"></h1>
+      <p>{{$layoutMobile}}</p>
+      <p>{{$layoutWidth}}</p>
+      <p>{{$layoutHeight}}</p>
     </v-flex>
   </v-layout>
 </template>

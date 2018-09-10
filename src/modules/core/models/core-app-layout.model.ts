@@ -24,6 +24,30 @@ export class CoreAppLayoutModel extends BaseModel {
   @defaultValue(null)
   icon!: string;
 
+  @defaultValue(null)
+  windowWidth!: number;
+
+  @defaultValue(null)
+  windowHeight!: number;
+
+  @defaultValue(false)
+  mobile!: boolean;
+
+  @defaultValue(false)
+  xs!: boolean;
+
+  @defaultValue(false)
+  sm!: boolean;
+
+  @defaultValue(false)
+  md!: boolean;
+
+  @defaultValue(false)
+  lg!: boolean;
+
+  @defaultValue(false)
+  xl!: boolean;
+
   constructor(data?: Partial<CoreAppLayoutModel>) {
     super(data);
   }

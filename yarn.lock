@@ -1534,6 +1534,12 @@ browser-resolve@^1.11.3:
   dependencies:
     resolve "1.1.7"
 
+browser-soap@johniak/browser-soap:
+  version "1.0.4"
+  resolved "https://codeload.github.com/johniak/browser-soap/tar.gz/b143c47054e9d3f536060c54b41da19347237dbb"
+  dependencies:
+    node-xml "1.0.2"
+
 browserify-aes@^1.0.0, browserify-aes@^1.0.4:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/browserify-aes/-/browserify-aes-1.2.0.tgz#326734642f403dabc3003209853bb70ad428ef48"
@@ -5268,6 +5274,10 @@ node-releases@^1.0.0-alpha.11:
   resolved "https://registry.yarnpkg.com/node-releases/-/node-releases-1.0.0-alpha.11.tgz#73c810acc2e5b741a17ddfbb39dfca9ab9359d8a"
   dependencies:
     semver "^5.3.0"
+
+node-xml@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/node-xml/-/node-xml-1.0.2.tgz#cea59082b100c70337111ca53e1f38f829e3bccb"
 
 nopt@^4.0.1:
   version "4.0.1"

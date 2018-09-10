@@ -28,17 +28,6 @@ Vue.use(vCore as any, {
 
 Vue.config.productionTip = false;
 
-Vue.prototype.$layout = {
-  windowWidth: null,
-  windowHeight: null,
-  mobile: false,
-  xs: false,
-  sm: false,
-  md: false,
-  lg: false,
-  xl: false
-};
-
 new Vue({
   router,
   store,
