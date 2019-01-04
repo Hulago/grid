@@ -21,16 +21,18 @@ const core = namespace('core');
 @Component({})
 export default class App extends Vue {
   @core.State((state: CoreStateModel) => state.loading)
-  public globalLoading!: boolean;
+  globalLoading!: boolean;
 
-  @core.Mutation(CORE_MUTATIONS.LAYOUT.SET_LAYOUT) public setLayout!: (layout: any) => void;
+  @core.Mutation(CORE_MUTATIONS.LAYOUT.SET_LAYOUT) public setLayout!: (
+    layout: any
+  ) => void;
 
   async created() {
     this.$coreSetLoading(true);
     await this.dbService.load<CoreUserModel>('USER');
-    setTimeout(() => {
+    this.$nextTick(() => {
       this.$coreSetLoading(false);
-    }, 500);
+    });
   }
 
   mounted() {

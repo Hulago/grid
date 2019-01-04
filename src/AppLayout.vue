@@ -1,7 +1,7 @@
 <template>
   <div>
-    <v-navigation-drawer :clipped="$vuetify.breakpoint.lgAndUp" v-model="drawer" fixed app class="pa-0" width="330" mini-variant-width="80"
-      :mini-variant="drawerMini" :floating="leftDrawerFloating">
+    <v-navigation-drawer :clipped="$vuetify.breakpoint.lgAndUp" v-model="drawer" fixed app class="pa-0" width="330"
+      mini-variant-width="80" :mini-variant="drawerMini" :floating="leftDrawerFloating">
       <v-layout row fill-height>
         <core-sidebar color="#003255" :items="sidebarItems" :mobile="$layoutMobile" @clickLogo="clickLogo()">
           <slot name="sidebarLogo" slot="logo"></slot>
@@ -17,12 +17,13 @@
       </v-layout>
     </v-navigation-drawer>
 
-    <v-toolbar :clipped-left="$vuetify.breakpoint.lgAndUp" color="primary darken-3" dark app fixed :mini="leftDrawerMini" :mobile="$layoutMobile">
+    <v-toolbar :clipped-left="$vuetify.breakpoint.lgAndUp" color="primary darken-3" dark app fixed :mini="leftDrawerMini"
+      :mobile="$layoutMobile">
       <v-toolbar-title class="mr-5">
         <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
         <span class="hidden-sm-and-down">Grid</span>
       </v-toolbar-title>
-      <v-text-field flat solo-inverted hide-details prepend-inner-icon="search" label="Search" class="hidden-sm-and-down"></v-text-field>
+      <!-- <v-text-field flat solo-inverted hide-details prepend-inner-icon="search" label="Search" class="hidden-sm-and-down"></v-text-field> -->
       <v-spacer></v-spacer>
 
       <v-menu offset-y>
@@ -49,23 +50,29 @@
     <v-content>
       <v-container fluid fill-height>
         <router-view></router-view>
-
       </v-container>
     </v-content>
+    <app-setup-modal :visibility.sync="setup"></app-setup-modal>
   </div>
 
 </template>
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue, Watch } from 'vue-property-decorator';
 import { namespace } from 'vuex-class';
 import { Location } from 'vue-router';
 import { CoreSidebarItemsModel, CoreStateModel } from '@/modules/core/models';
 import { AcademicYearModel } from '@/modules/base/models/academic-year.model';
 import { CourseModel } from '@/modules/base/models/course.model';
 import CORE_ACTIONS from '@/modules/core/constants/actions.constant';
+import BASE_ACTIONS from '@/modules/base/constants/actions.constant';
+import BASE_TYPES from '@/modules/base/constants/types.constant';
+import { gridService } from '@/modules/base/services/grid.service';
 import moment from 'moment';
+import { GridStateModel } from '@/modules/base/models/grid-state.model';
+import { setTimeout } from 'timers';
 
 const core = namespace('core');
+const base = namespace('base');
 
 @Component({})
 export default class AppLayout extends Vue {
@@ -89,16 +96,19 @@ export default class AppLayout extends Vue {
 
   @core.Action(CORE_ACTIONS.LOGOUT) public coreLogoutAction!: () => void;
 
+  @base.State((state: GridStateModel) => state.courses)
+  courses!: CourseModel[] | null;
+
+  @base.Action(BASE_ACTIONS.LOAD_ENTITIES) loadEntities!: () => void;
+
   public sidebarItems: CoreSidebarItemsModel[];
 
-  public setup: any;
+  public setup: boolean;
 
   constructor() {
     super();
 
-    this.setup = {
-      courses: false
-    };
+    this.setup = false;
 
     this.sidebarItems = [
       {
@@ -161,33 +171,17 @@ export default class AppLayout extends Vue {
     this.$router.push({ name: 'home' });
   }
 
-  async loadAcademicYear() {
-    await this.dbService.load<AcademicYearModel>('ACADEMIC_YEAR');
-    const academicYear = this.dbService.get<AcademicYearModel>('ACADEMIC_YEAR').find();
-    if (academicYear.length === 0) {
-      this.dbService.get<AcademicYearModel>('ACADEMIC_YEAR').insert(
-        new AcademicYearModel({
-          startDate: moment('2018-09-01').toISOString(),
-          endDate: moment('2019-07-31').toISOString()
-        })
-      );
-
-      await this.dbService.commit('ACADEMIC_YEAR');
-    }
-  }
-
-  async loadCourses() {
-    await this.dbService.load<CourseModel>('COURSE');
-    const courses = this.dbService.get<CourseModel>('CourseModel').find();
-    if (courses.length === 0) {
-      this.setup.course = true;
-    }
-  }
-
   async created() {
     this.$coreSetLoading(true);
-    await this.loadAcademicYear();
-    await this.loadCourses();
+
+    await this.loadEntities();
+
+    if (this.courses && this.courses.length === 0) {
+      this.setup = true;
+    }
+
+    // await gridService.loadAcademicYear();
+    // const courses = await gridService.loadCourses();
 
     // setup courses
     // dropdown ac and courses

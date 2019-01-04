@@ -10,6 +10,7 @@ import './registerServiceWorker';
 import LANGUAGES from './constants/language.constant';
 
 import { vCore, coreI18n } from './modules/core';
+import base from '@/modules/base';
 
 import Vuetify from 'vuetify';
 Vue.use(Vuetify, {
@@ -24,6 +25,10 @@ Vue.use(Vuetify, {
 Vue.use(vCore as any, {
   store,
   router
+});
+
+Vue.use(base, {
+  store
 });
 
 Vue.config.productionTip = false;

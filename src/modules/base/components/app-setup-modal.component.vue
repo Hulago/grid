@@ -31,7 +31,7 @@ import { Component, Prop, Watch } from 'vue-property-decorator';
 @Component({
   name: 'app-setup-modal'
 })
-export default class AppSetupModal extends Vue {
+export default class extends Vue {
   @Prop({ default: false })
   public visibility!: boolean;
 

@@ -2,9 +2,6 @@ import * as iziToast from 'izitoast';
 import { throttle } from 'lodash';
 import 'izitoast/dist/css/iziToast.min.css';
 
-import TYPES from '../constants/types.constant';
-
-import { provideSingleton } from '../decorators/di.decorators';
 import { BaseService } from './base.service';
 
 export interface INotificationSettings {
@@ -44,7 +41,6 @@ const NOTIFICATION_TYPE = {
   DEBUG: 'debug'
 };
 
-@provideSingleton(TYPES.NotificationService)
 export class NotificationService extends BaseService {
   private static privateModule: string;
   private static privateAction: string;
@@ -263,4 +259,4 @@ export class NotificationService extends BaseService {
   }
 }
 
-// di.load();
+export const notificationService = new NotificationService();

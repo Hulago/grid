@@ -1,11 +1,7 @@
 import * as localforage from 'localforage';
 
-import { provideSingleton } from '../decorators/di.decorators';
 import { BaseService } from './base.service';
 
-import TYPES from '../constants/types.constant';
-
-@provideSingleton(TYPES.StorageService)
 export class StorageService extends BaseService {
   private db: LocalForage;
 
@@ -33,3 +29,5 @@ export class StorageService extends BaseService {
     return this.db.removeItem(key);
   }
 }
+
+export const storageService = new StorageService();

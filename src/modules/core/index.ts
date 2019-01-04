@@ -45,18 +45,15 @@ const vCore = {
     V.component('core-sidebar', Components.CoreSidebarComponent);
     V.component('core-global-loading', Components.CoreGlobalLoading);
 
-    const storageService: Services.StorageService = Services.di.get<Services.StorageService>(TYPES.StorageService);
-    const authService: Services.AuthService = Services.di.get<Services.AuthService>(TYPES.AuthService);
-
-    authService.setup(store);
+    Services.authService.setup(store);
 
     // TODO set this on the app config
-    storageService.setup('CORE');
+    Services.storageService.setup('CORE');
 
     // View App Layouts
     V.mixin(CoreMixin);
 
-    router.beforeEach(authService.validate());
+    router.beforeEach(Services.authService.validate());
 
     // router.addRoutes([
     //   {

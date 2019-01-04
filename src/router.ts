@@ -19,12 +19,12 @@ export default new Router({
     {
       path: '/app',
       component: AppLayout,
-      meta: { requiresAuth: false },
+      meta: { requiresAuth: true },
       children: [
         {
           path: '',
           redirect: 'dashboard',
-          meta: { requiresAuth: false }
+          meta: { requiresAuth: true }
         },
         {
           path: 'dashboard',
@@ -34,7 +34,7 @@ export default new Router({
               import(/* webpackChunkName: "dashboard" */ './views/app/dashboard/dashboard-sidebar.view.vue'),
             default: () => import(/* webpackChunkName: "dashboard" */ './views/app/dashboard/dashboard.view.vue')
           },
-          meta: { requiresAuth: false }
+          meta: { requiresAuth: true }
         },
         {
           path: 'academic-year',

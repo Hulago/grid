@@ -1,14 +1,11 @@
 import 'reflect-metadata';
 import { BaseService } from './base.service';
 import { DBService } from './db.service';
-import TYPES from '../constants/types.constant';
-import { provideSingleton, Inject } from '../decorators/di.decorators';
 import { Store } from 'vuex';
 import { NavigationGuard } from 'vue-router';
 
 import { isArray, isObject, isNumber, isString, isBoolean, isEmpty } from 'lodash';
 
-@provideSingleton(TYPES.AuthService)
 export class AuthService extends BaseService {
   private store!: Store<any>;
 
@@ -61,4 +58,4 @@ export class AuthService extends BaseService {
   }
 }
 
-// di.load();
+export const authService = new AuthService();

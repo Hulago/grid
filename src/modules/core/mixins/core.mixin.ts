@@ -3,8 +3,16 @@ import Vue from 'vue';
 import { namespace } from 'vuex-class';
 
 import { Component } from 'vue-property-decorator';
-import { FormsService, NotificationService, StorageService, DBService } from '../services';
-import { Inject } from '../decorators/di.decorators';
+import {
+  FormsService,
+  NotificationService,
+  StorageService,
+  DBService,
+  formsService,
+  notificationService,
+  storageService,
+  dbService
+} from '../services';
 
 import { AbstractControl } from '../models/abstract-control.model';
 import { FormControl } from '../models/form-control.model';
@@ -55,17 +63,13 @@ const core = namespace('core');
 export class CoreMixin extends Vue {
   flag: boolean = false;
 
-  @Inject(TYPES.NotificationService)
-  public notificationService!: NotificationService;
+  notificationService: NotificationService = notificationService;
 
-  @Inject(TYPES.StorageService)
-  public storageService!: StorageService;
+  storageService: StorageService = storageService;
 
-  @Inject(TYPES.FormsService)
-  public formsService!: FormsService;
+  formsService: FormsService = formsService;
 
-  @Inject(TYPES.DBService)
-  public dbService!: DBService;
+  dbService: DBService = dbService;
 
   @core.Mutation(CORE_MUTATIONS.LAYOUT.SET_LEFT_DRAWER)
   public $layoutSetLeftDrawer!: (state: boolean) => void;

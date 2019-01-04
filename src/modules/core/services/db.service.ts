@@ -1,21 +1,13 @@
 import 'reflect-metadata';
 import { BaseService } from './base.service';
-import { StorageService } from './storage.service';
+import { storageService, StorageService } from './storage.service';
 
-import TYPES from '../constants/types.constant';
-import METADATA from '../constants/metadata.constant';
-
-import { provideSingleton, Inject } from '../decorators/di.decorators';
 import { klass } from '../types';
 
 import { get, isArray, isObject, isNumber, isString, isBoolean, isEmpty } from 'lodash';
 
-@provideSingleton(TYPES.DBService)
 export class DBService extends BaseService {
-  @Inject(TYPES.StorageService)
-  public storageService!: StorageService;
-
-  public db: {
+  db: {
     [entity: string]: DBEntity<any>;
   };
 
@@ -26,17 +18,17 @@ export class DBService extends BaseService {
 
   async load<T>(entity: string) {
     // register entities
-    const registry: string[] = await this.storageService.getItem('REGISTRY');
+    const registry: string[] = await storageService.getItem('REGISTRY');
 
     if (!registry) {
-      this.storageService.setItem('REGISTRY', [entity]);
+      storageService.setItem('REGISTRY', [entity]);
     } else if (registry.indexOf(entity) === -1) {
-      this.storageService.setItem('REGISTRY', [...registry, entity]);
+      storageService.setItem('REGISTRY', [...registry, entity]);
     }
 
-    const dbEntity = await this.storageService.getItem(entity);
+    const dbEntity = await storageService.getItem(entity);
     if (!dbEntity) {
-      await this.storageService.setItem(entity, new DBEntity<T>());
+      await storageService.setItem(entity, new DBEntity<T>());
       this.db = {
         ...this.db,
         [entity]: new DBEntity<T>()
@@ -64,10 +56,8 @@ export class DBService extends BaseService {
       })
     };
 
-    return this.storageService.setItem(entity, serialized);
+    return storageService.setItem(entity, serialized);
   }
-
-  // close() {}
 }
 
 export class DBEntity<T> {
@@ -105,4 +95,4 @@ export class DBEntity<T> {
   }
 }
 
-// di.load();
+export const dbService = new DBService();

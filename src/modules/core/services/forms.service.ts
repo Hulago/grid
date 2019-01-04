@@ -5,8 +5,6 @@ import { BaseService } from './base.service';
 import { AbstractControl } from '../models/abstract-control.model';
 import { FormControl } from '../models/form-control.model';
 import { FormGroup } from '../models/form-group.model';
-import TYPES from '../constants/types.constant';
-import { provideSingleton } from '../decorators/di.decorators';
 
 import { isArray, isObject, isNumber, isString, isBoolean, isEmpty } from 'lodash';
 
@@ -25,7 +23,6 @@ export const PROPS_TYPE = {
   ANY: 'any'
 };
 
-@provideSingleton(TYPES.FormsService)
 export class FormsService extends BaseService implements IFormsService {
   static order = ['required', 'min'];
 
@@ -182,4 +179,4 @@ export class FormsService extends BaseService implements IFormsService {
   }
 }
 
-// di.load();
+export const formsService = new FormsService();

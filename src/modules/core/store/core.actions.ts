@@ -1,6 +1,6 @@
 import MUTATIONS from '../constants/mutations.constant';
 import ACTIONS from '../constants/actions.constant';
-import { di, StorageService, AuthService, DBService, DBEntity } from '../services';
+import { storageService, authService, dbService, DBEntity } from '../services';
 import { CoreStateModel } from '../models/core-state.model';
 import { CoreErrorModel, CoreUserModel } from '../models';
 
@@ -8,9 +8,6 @@ import TYPES from '../constants/types.constant';
 import { ActionContext } from 'vuex';
 
 // const wds = di.get<WorkerDataService>(TYPES.WorkerDataService);
-const storageService = di.get<StorageService>(TYPES.StorageService);
-const authService = di.get<AuthService>(TYPES.AuthService);
-const dbService = di.get<DBService>(TYPES.DBService);
 
 export default {
   async [ACTIONS.LOGIN](
